@@ -16,7 +16,7 @@ rm(list = ls())
 taskID <- commandArgs(trailingOnly = TRUE)
 
 # Imputed bird dataset 
-birdData <- read.csv(paste0(getwd(),"/data/imputed_dataset ",taskID," .csv"))
+birdData <- read.csv(paste0(getwd(),"/data/imputed_dataset",taskID,".csv"))
 
 # Bird pylogenies
 sampleTrees <- read.tree(paste0(getwd(),"/data/sample_100.tre"))
