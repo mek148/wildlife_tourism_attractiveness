@@ -4,7 +4,7 @@
 
 #SBATCH --job-name=test
 #SBATCH --partition=test
-#SBATCH --array=1-4                    # how many tasks in the array
+#SBATCH --array=0-3                   # how many tasks in the array
 #SBATCH -c 1                            # one CPU core per task
 #SBATCH -t 10:00
 #SBATCH -o test-%j-%a.out
@@ -14,8 +14,8 @@
 # Load software
 module add jasr
 
-A=$((SLURM_ARRAY_TASK_ID/2))
-B=$((SLURM_ARRAY_TASK_ID%2))
+A=$((SLURM_ARRAY_TASK_ID/2+1))
+B=$((SLURM_ARRAY_TASK_ID%2+1))
 
 # Run R script with a command line argument
-Rscript test.R imputed_dataset$A $A
+Rscript test.R imputed_dataset$A $B
