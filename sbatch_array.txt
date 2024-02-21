@@ -2,7 +2,7 @@
 
 # Example of running R script with a job array
 
-#SBATCH -job-name=test
+#SBATCH --job-name=test
 #SBATCH --partition=test
 #SBATCH --array=1-2                    # how many tasks in the array
 #SBATCH -c 1                            # one CPU core per task
