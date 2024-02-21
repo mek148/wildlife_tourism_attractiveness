@@ -2,6 +2,8 @@
 ## Testing sbatch script on multiple datasets and multiple trees ##
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+library(ape)
+
 args <- commandArgs(T)
 
 print(args[1])
