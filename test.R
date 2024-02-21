@@ -10,4 +10,4 @@ print(args[2])
 df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
 
 trees <- read.tree(paste0(getwd(),"/data/sample_100.tre"))
-tree <- tree[args[2]]
+tree <- trees[args[2]]
