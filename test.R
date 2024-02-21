@@ -5,9 +5,9 @@
 args <- commandArgs(T)
 
 print(args[1])
+print(args[2])
 
 df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
 
-head(df)
-
-write.csv(df, paste0(getwd(),"/data/new-",args[1],".csv"))
+trees <- read.tree(paste0(getwd(),"/data/sample_100.tre"))
+tree <- tree[args[2]]
