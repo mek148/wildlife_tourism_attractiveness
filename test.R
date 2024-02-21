@@ -6,4 +6,7 @@
 args <- commandArgs(T)
 
 print(args[1])
-print(args[2])
+
+df <- read.csv(paste0(args[1],".csv"))
+
+head(df)

@@ -12,7 +12,7 @@
 #SBATCH --mail-user=maire.kirkland@bto.org
 
 # Load software
-module add jasr
+module add jars
 
 # Run R script with a command line argument
-Rscript test.R imputed_dataset”$SLURM_ARRAY_TASK_ID”
+Rscript test.R imputed_dataset$SLURM_ARRAY_TASK_ID
