@@ -4,7 +4,7 @@
 
 #SBATCH --job-name=test
 #SBATCH --partition=test
-#SBATCH --array=0-8                   # how many tasks in the array
+#SBATCH --array=0-7                   # how many tasks in the array
 #SBATCH -c 1                            # one CPU core per task
 #SBATCH -t 10:00
 #SBATCH -o test-%j-%a.out
