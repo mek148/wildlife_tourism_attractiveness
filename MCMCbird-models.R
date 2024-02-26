@@ -1,6 +1,6 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-## MCMC HURDLE MODEL ON NUMBER OF GUIDES MENTIONING species.df ##
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c~~~~~~#
+## MCMC HURDLE MODEL ON NUMBER OF GUIDES MENTIONING BIRDS ##
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Libraries
 library(ape)
@@ -13,17 +13,10 @@ rm(list = ls())
 
 ######################### PREPARE DATA #########################
 
-# Index for dataset and phylogenetic tree
-args <- commandArgs(trailingOnly=TRUE)
-
-dataset.n <- args[1]
-tree.n <- args[2]
-
-# Imputed bird dataset 
-species.df <- read.csv(paste0(getwd(),"/data/imputed_dataset",taskID,".csv"))
-
-# Bird pylogenies
-trees <- read.tree(paste0(getwd(),"/data/sample_100.tre"))
+# Command argument for dataset and phylogenetic tree, as you are looping through 5 datasets and 100 trees
+args <- commandArgs(T)
+species.df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
+tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[[args[[2]]]]
 
 # Convert extinction risk and migration to continuous variable
 species.df$ext_risk <- ifelse(species.df$status == "LC", 1, ifelse(species.df$status == "NT", 2, 
@@ -84,9 +77,9 @@ mod <- MCMCglmm(
       data = species.df,
       prior = prior,
       family = "zapoisson",
-      nitt = 350,
-      thin = 30,
-      burnin = 10,
+      nitt = 3500000, 
+      thin = 3000, 
+      burnin = 10000, 
       verbose = F,
       pl = T,
       pr = T
@@ -96,8 +89,8 @@ mod <- MCMCglmm(
 saveRDS(mod, paste0("MCMCbird-models",taskID,".rds"))
 
 # Model predictions
-predictions <- predict(mod, marginal = NULL, 
-          type = "response", posterior = "mean")
+predictions <- as.data.frame(predict(mod, marginal = NULL, 
+          type = "response", posterior = "mean"))
 
 # Fix political stability constant at maximum
 new.df <- species.df
@@ -107,5 +100,5 @@ fixed.predictions <- as.data.frame(predict(mode, marginal = NULL, newdata = newD
           type = "response", posterior = "mean")) 
 
 # Export
-write.csv(predictions, paste0("bird-predictions",dataset.n,"-",tree.n,".csv"), row.names = F)
-write.csv(fixed.predictions, paste0("bird-fixed-predictions",dataset.n,"-",tree.n,".csv"), row.names = F)
+write.csv(predictions, paste0("bird-predictions-",args[1],"-",args[2],".csv"), row.names = F)
+write.csv(fixed.predictions, paste0("bird-fixed-predictions-",args[1],"-",args[2],".csv"), row.names = F)
