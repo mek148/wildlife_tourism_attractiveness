@@ -4,7 +4,7 @@
 
 #SBATCH --job-name=mcmc-bird
 #SBATCH --partition=long-serial
-#SBATCH --array=0-2             
+#SBATCH --array=0-499             
 #SBATCH -c 1                            
 #SBATCH -t 168:00:00
 #SBATCH -o mcmc-bird-%j-%a.out
