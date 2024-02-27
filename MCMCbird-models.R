@@ -16,7 +16,7 @@ rm(list = ls())
 # Command argument for dataset and phylogenetic tree, as you are looping through 5 datasets and 100 trees
 args <- commandArgs(T)
 species.df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
-tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[[args[[2]]]]
+tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[[args[2]]]
 
 # Convert extinction risk and migration to continuous variable
 species.df$ext_risk <- ifelse(species.df$status == "LC", 1, ifelse(species.df$status == "NT", 2, 
@@ -86,7 +86,7 @@ mod <- MCMCglmm(
     )
 
 # Save models
-saveRDS(mod, paste0("MCMCbird-models",taskID,".rds"))
+saveRDS(mod, paste0("MCMCbird-models-",args[1],"-",args[2],".rds"))
 
 # Model predictions
 predictions <- as.data.frame(predict(mod, marginal = NULL, 
