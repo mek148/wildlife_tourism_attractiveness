@@ -16,7 +16,7 @@ rm(list = ls())
 # Command argument for dataset and phylogenetic tree, as you are looping through 5 datasets and 100 trees
 args <- commandArgs(T)
 species.df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
-tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[args[2]]
+tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[[as.numeric(args[2])]]
 
 # Convert extinction risk and migration to continuous variable
 species.df$ext_risk <- ifelse(species.df$status == "LC", 1, ifelse(species.df$status == "NT", 2, 
@@ -45,7 +45,7 @@ rownames(species.df) <- species.df$scientific_name
 
 # Check names match using function from {geiger} and remove non-matching species
 nameCheck <- name.check(tree, species.df)
-pruned.tree <- lapply(tree, drop.tip, nameCheck$tree_not_data) ## Drops tips from multiple trees that are not present in dataset
+pruned.tree <- drop.tip(tree, nameCheck$tree_not_data) ## Drops tips from multiple trees that are not present in dataset
 
 # Rename first column 
 colnames(species.df)[1] <- "species"
