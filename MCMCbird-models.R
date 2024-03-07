@@ -28,10 +28,6 @@ species.df$migration <- ifelse(species.df$migration == "Not a Migrant", 1,
 # Scale covariates
 species.df[c("scaled_ED", "scaled_mass", "scaled_range", "scaled_ext", "scaled_ps", "scaled_dist", "scaled_migration", "scaled_elab", "scaled_div")] <- scale(species.df[c("ED_score", "logMass", "logRange", "ext_risk", "ps", "min_dist", "migration", "colour_elab", "colour_div")], center = T, scale = T)
 
-# Convert binary variables back to factors
-species.df$colony <- ifelse(species.df$colony == 1, "Colonial", "Not colonial")
-species.df$tp <- ifelse(species.df$tp == 1, "Diurnal", "Nocturnal")
-
 # Order levels 
 species.df$tl <- factor(species.df$tl, levels = c("Herbivore", "Omnivore", "Carnivore"))
 species.df$tp <- factor(species.df$tp, levels = c("Nocturnal", "Diurnal"))
@@ -77,9 +73,9 @@ mod <- MCMCglmm(
       data = species.df,
       prior = prior,
       family = "zapoisson",
-      nitt = 3500000, 
-      thin = 3000, 
-      burnin = 10000, 
+      nitt = 3500, 
+      thin = 30, 
+      burnin = 100, 
       verbose = F,
       pl = T,
       pr = T
@@ -100,5 +96,7 @@ fixed.predictions <- as.data.frame(predict(mode, marginal = NULL, newdata = newD
           type = "response", posterior = "mean")) 
 
 # Export
-write.csv(predictions, paste0("bird-predictions-",args[1],"-",args[2],".csv"), row.names = F)
+write.csv(predictions, paste0("bird-predictions-1-1.csv"), row.names = F)
 write.csv(fixed.predictions, paste0("bird-fixed-predictions-",args[1],"-",args[2],".csv"), row.names = F)
+
+save.image("test.RData")
