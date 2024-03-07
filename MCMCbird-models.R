@@ -73,9 +73,9 @@ mod <- MCMCglmm(
       data = species.df,
       prior = prior,
       family = "zapoisson",
-      nitt = 3500, 
-      thin = 30, 
-      burnin = 100, 
+      nitt = 3500000, 
+      thin = 3000, 
+      burnin = 10000, 
       verbose = F,
       pl = T,
       pr = T
@@ -84,19 +84,3 @@ mod <- MCMCglmm(
 # Save models
 saveRDS(mod, paste0("MCMCbird-models-",args[1],"-",args[2],".rds"))
 
-# Model predictions
-predictions <- as.data.frame(predict(mod, marginal = NULL, 
-          type = "response", posterior = "mean"))
-
-# Fix political stability constant at maximum
-new.df <- species.df
-new.df$scaled_ps <- max(new.df$scaled_ps)*rnorm(nrow(new.df), 1, 1e-5)
-
-fixed.predictions <- as.data.frame(predict(mode, marginal = NULL, newdata = newData, 
-          type = "response", posterior = "mean")) 
-
-# Export
-write.csv(predictions, paste0("bird-predictions-1-1.csv"), row.names = F)
-write.csv(fixed.predictions, paste0("bird-fixed-predictions-",args[1],"-",args[2],".csv"), row.names = F)
-
-save.image("test.RData")
