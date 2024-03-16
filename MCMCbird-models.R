@@ -11,7 +11,7 @@ library(geiger)
 rm(list = ls())
 
 # Load data
-load(paste0(getwd(),"/input data/",args[1],"-",args[2]))
+load(paste0(getwd(),"/input_data/",args[1],"-",args[2]))
 
 # Run multiple chains using 100 different trees and five imputed datasets to obtain 500 models incorporating phylogenetic uncertainty and uncertainty in the imputation procedure. Zero-altered Poisson to account for large number of zeros. 
 set.seed(1) 
