@@ -55,4 +55,4 @@ prior <- list(R = list(V = diag(2), nu = 0.002, fix = 2),
                        G3 = list(V = 1, nu = 1, alpha.mu = 0, alpha.V = 25^2),
                        G4 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1)))
 
-save.image(paste0(getwd(),"/input data/",args[1],"-",args[2]))
+save.image(paste0(getwd(),"/input_data/",args[1],"-",args[2]))
