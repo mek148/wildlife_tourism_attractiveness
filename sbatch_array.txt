@@ -4,18 +4,15 @@
 
 #SBATCH --job-name=mcmc-bird
 #SBATCH --partition=long-serial
-#SBATCH --array=0-499             
+#SBATCH --array=0-249            
 #SBATCH -c 1                            
 #SBATCH -t 168:00:00
-#SBATCH -o mcmc-bird-%j-%a.out
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=maire.kirkland@bto.org
-
+#SBATCH -o %j-%a.out
 # Load software
 module add jasr
 
 A=$((SLURM_ARRAY_TASK_ID%5+1))
-B=$((SLURM_ARRAY_TASK_ID%100+1))
+B=$((SLURM_ARRAY_TASK_ID%50+1))
 
 # Run R script with a command line argument
 Rscript MCMCbird-models.R imputed_dataset$A $B
