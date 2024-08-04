@@ -73,7 +73,7 @@ mod <- MCMCglmm(
       data = species.df,
       prior = prior,
       family = "zapoisson",
-      nitt = 3500000, 
+      nitt = 2500000, 
       thin = 3000, 
       burnin = 10000, 
       verbose = F,
