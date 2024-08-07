@@ -3,16 +3,17 @@
 # Example of running R script with a job array
 
 #SBATCH --job-name=mcmc-bird
-#SBATCH --partition=long-serial
-#SBATCH --array=0-249            
+#SBATCH --p=multi
+#SBATCH --array=0            
 #SBATCH -c 1                            
-#SBATCH -t 168:00:00
-#SBATCH -o %j-%a.out
+#SBATCH -time 3-00:00:00
+
 # Load software
-module add jasr
+module load r/4.1.2
+module load $R_BUILD_MODULES
 
 A=$((SLURM_ARRAY_TASK_ID%5+1))
 B=$((SLURM_ARRAY_TASK_ID%50+1))
 
 # Run R script with a command line argument
-Rscript MCMCbird-models.R imputed_dataset$A $B
+R CMD BATCH MCMCbird-models.R imputed_dataset$A $B
