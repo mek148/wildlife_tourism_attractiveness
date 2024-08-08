@@ -3,17 +3,20 @@
 # Example of running R script with a job array
 
 #SBATCH --job-name=mcmc-bird
-#SBATCH --p=multi
+#SBATCH --p shared
 #SBATCH --array=0            
 #SBATCH -c 1                            
 #SBATCH -time 3-00:00:00
 
 # Load software
 module load r/4.1.2
-module load $R_BUILD_MODULES
 
 A=$((SLURM_ARRAY_TASK_ID%5+1))
 B=$((SLURM_ARRAY_TASK_ID%50+1))
 
 # Run R script with a command line argument
 R CMD BATCH MCMCbird-models.R imputed_dataset$A $B
+
+module load chkpt 
+chmod u+x sbatch_array
+sbatch -p shared --mem=4G --array=0-499 -c 1 --time=3-00:00:00 $CHKPT_HOME/chkpt_job ./sbatch_array
