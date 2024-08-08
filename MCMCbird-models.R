@@ -14,7 +14,7 @@ rm(list = ls())
 
 # Command argument for dataset and phylogenetic tree, as you are looping through 5 datasets and 100 trees
 args <- commandArgs(T)
-species.df <- read.csv(paste0(getwd(),"/data/",args[1],".csv"))
+species.df <- read.csv(paste0(getwd(),"/data/imputed_dataset",args[1],".csv"))
 tree <- read.tree(paste0(getwd(),"/data/sample_100.tre"))[[as.numeric(args[2])]]
 
 # Convert extinction risk and migration to continuous variable
