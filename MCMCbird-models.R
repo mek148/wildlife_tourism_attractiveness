@@ -3,10 +3,10 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Libraries
-install.packages("ape")
-install.packages("MCMCglmm")
-install.packages("caper")
-install.packages("geiger")
+library("ape")
+library("MCMCglmm")
+library("caper")
+library("geiger")
 
 rm(list = ls())
 
@@ -72,9 +72,9 @@ mod <- MCMCglmm(
       data = species.df,
       prior = prior,
       family = "zapoisson",
-      nitt = 2000, 
-      thin = 300, 
-      burnin = 100, 
+      nitt = 3500000, 
+      thin = 3000, 
+      burnin = 10000,
       verbose = F,
       pl = T,
       pr = T
